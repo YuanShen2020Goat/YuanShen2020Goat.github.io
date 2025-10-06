@@ -37,6 +37,7 @@ function draw() {
   let avgHeight = total/count; // avg height line
   stroke(255, 0, 0);
   line(0, height - avgHeight, width, height - avgHeight);
+  noStroke();
 
   noiseStart = noiseStart+0.02;
 }
@@ -57,8 +58,7 @@ function keyPressed(){
   if (keyCode === LEFT_ARROW){
     rectWidth = max(1, rectWidth - 1);
     generateTerrain();
-  } else 
-    (keyCode === RIGHT_ARROW);{
+  } else if(keyCode === RIGHT_ARROW)  {
       rectWidth += 1;
       generateTerrain();
   }

@@ -54,7 +54,7 @@ function generateTerrain(){ // draw terrain
   draw();
 }
 
-function keyPressed(){
+function keyPressed(){ // keyboard controlls
   if (keyCode === LEFT_ARROW){
     rectWidth = max(1, rectWidth - 1);
     generateTerrain();

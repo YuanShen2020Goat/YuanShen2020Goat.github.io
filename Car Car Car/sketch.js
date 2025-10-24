@@ -36,17 +36,6 @@ class Vehicle{
     this.direction = direction;
     this.xSpeed = xSpeed;
   }
-  
-  display(){
-    fill(this.color);
-    noStroke();
-    if (this.type === 0){
-     rect(this.x, this.y - 10, 40, 20, 5);
-    }
-    else{
-     rect(this.x, this.y - 15, 60, 30, 5);
-    }
-  }
 
   move(){
     this.x += this.xSpeed;
@@ -69,6 +58,28 @@ class Vehicle{
 
   changeClor(){
     this.c = color(random(255), random(255), random(255));
+  }
+
+    
+  display(){
+     fill(this.color);
+    if (this.type === 0) this.drawCar();
+    else this.drawTruck();
+  }
+
+  drawCar(){
+    fill(this.c);
+    rect(this.x, this.y, 50, 20);
+    fill(0);
+    rect(this.x + 5, this.y - 5, 10, 30);
+    rect(this.x + 35, this.y - 5, 10, 30);
+  }
+
+  drawTruck(){
+    fill(this.c);
+    rect(this.x, this.y, 120, 30);
+    fill(255);
+    rect(this.x - 30, this.y + 2.5, 30, 25);
   }
 }
 

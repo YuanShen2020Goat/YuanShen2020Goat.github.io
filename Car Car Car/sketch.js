@@ -81,13 +81,13 @@ class Vehicle{
 
   speedUp(){ //speed up slightly
     if(this.xSpeed < 15){
-      this.xSpeed += 0.;
+      this.xSpeed += 0.2;
     }
   }
 
   speedDown(){ //slow down slightly but dont stop
     if (this.xSpeed > 0) {
-      this.xSpeed -= 0.;
+      this.xSpeed -= 0.2;
     }
   }
     

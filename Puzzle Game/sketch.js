@@ -18,13 +18,17 @@ let cols = grid[0].length;
 
 let squareSize = 60;
 
+let mode = "cross";
+
 function setup() {
   createCanvas(cols*squareSize, rows*squareSize);
+  randomizeGrid(); //random starting arrangement
 }
 
 function draw() {
   background(220);
   renderGrid();
+
   print(getCurrentX(),getCurrentY());
 }
 
@@ -72,6 +76,14 @@ function renderGrid(){
       let fillColor = grid[y][x];
       fill(fillColor);
       square(x*squareSize,y*squareSize,squareSize);
+    }
+  }
+}
+
+function randomizeGrid(){ //loop trough each tile and give random color
+  for (let y = 0; y < rows; y++){
+    for (let x = 0; x < cols; x++){
+      grid[x][y] = random([0, 255]); //only 0/255 as random color
     }
   }
 }

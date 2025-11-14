@@ -28,6 +28,15 @@ function setup() {
 function draw() {
   background(220);
   renderGrid();
+  drawOverlay();
+
+  if(checkWin()){
+    textSize(40);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text("You Win!", width / 2, height / 2);
+    noLoop();
+  }
 
   print(getCurrentX(),getCurrentY());
 }
@@ -83,7 +92,26 @@ function renderGrid(){
 function randomizeGrid(){ //loop trough each tile and give random color
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
-      grid[x][y] = random([0, 255]); //only 0/255 as random color
+      grid[y][x] = random([0, 255]); //only 0/255 as random color
     }
   }
+}
+
+function checkWin(){
+  let first = grid[0][0];
+  for (let r = 0; r < rows; r++){
+    for (let c = 0; c < cols; c++){
+      if (grid[r][c] !== first){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function drawOverlay(){
+  let x = getCurrentX();
+  let y = getCurrentY();
+
+  
 }

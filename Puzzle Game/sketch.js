@@ -42,20 +42,36 @@ function draw() {
 }
 
 function mousePressed(){
-  //flip current tile
-  //upgrade: only do this if the mouse is on Canvas
-  
   let x = getCurrentX();
   let y = getCurrentY();
 
-  //ALWAYS: flip the "focused" tile
-  flip(x,y);
+  if (x < 0 || x >= cols || y < 0 || y >= rows){
+    return;
+  }
 
-  //IF THEY EXIST:
-  //flip our NSEW neighbours (cross pattern)
-  if(x+1 < cols) flip(x+1,y);
-  if(y-1 >= 0) flip(x, y-1);
+  if (keyIsDown(SHIFT)){
+    flip(x, y);
+    return;
+  }
 
+  flip(x, y);
+
+  if (mode === 'cross'){
+    if (x + 1 < cols) flip(x + 1, y);
+    if (x - 1 >= 0) flip(x - 1, y);
+    if (y + 1 < rows) flip(x, y + 1);
+    if ( y - 1 >= 0) flip(x, y - 1);
+  }
+  else if (mode === "square"){
+    for (let dy = -1; dy <= 1; dy++){
+      for (let dx = -1; dx <= 1; dx++){
+        let nx = x + dx, ny = y + dy;
+        if (nx >= 0 && nx < cols && ny >= 0 && ny < rows){
+          flip(nx, ny);
+        }
+      }
+    }
+  }
 }
 
 function getCurrentX(){
@@ -110,8 +126,33 @@ function checkWin(){
 }
 
 function drawOverlay(){
-  let x = getCurrentX();
+  let x = getCurrrentX();
   let y = getCurrentY();
 
-  
+  if (x < 0 || x >= cols || y < 0 || y >= rows){
+    return;
+  }
+
+  fill(0, 255, 0, 100);
+  noStroke();
+
+  if (keyIsDown(SHIFT)){
+    square( x * squareSize, y * squareSize, squareSize);
+    return;
+  }
+
+  if (mde === "cross"){
+    highlightTile(x, y);
+    highlightTile(x + 1, y);
+    highlightTile(x - 1, y);
+    highlightTile(x, y + 1);
+    highlightTile(x, y - 1);
+  }
+  else if (mode === "square"){
+    for (let dy = -1; dy <= 1; dy ++){
+      for (let dx = -1; dx <= 1; dx++){
+        highlightTile(x + dx, y + dy);
+      }
+    }
+  }
 }

@@ -1,9 +1,7 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Puzzle Game
+// Eric
+// 11/18/2025
+
 
 
 let grid = [
@@ -27,15 +25,15 @@ function setup() {
 
 function draw() {
   background(220);
-  renderGrid();
-  drawOverlay();
+  renderGrid(); //draw board
+  drawOverlay(); //show overlay
 
-  if(checkWin()){
+  if(checkWin()){ //check win
     textSize(40);
     fill(0);
     textAlign(CENTER, CENTER);
-    text("You Win!", width / 2, height / 2);
-    noLoop();
+    text("You Win!", width / 2, height / 2); //show "Win" text center
+    noLoop(); //stop game
   }
 
   print(getCurrentX(),getCurrentY());
@@ -45,24 +43,24 @@ function mousePressed(){
   let x = getCurrentX();
   let y = getCurrentY();
 
-  if (x < 0 || x >= cols || y < 0 || y >= rows){
+  if (x < 0 || x >= cols || y < 0 || y >= rows){ //ignore if outsie grid
     return;
   }
 
-  if (keyIsDown(SHIFT)){
+  if (keyIsDown(SHIFT)){ //flip only one tile
     flip(x, y);
     return;
   }
 
-  flip(x, y);
+  flip(x, y); //flip center first
 
-  if (mode === 'cross'){
+  if (mode === 'cross'){ //cross pattern
     if (x + 1 < cols) flip(x + 1, y);
     if (x - 1 >= 0) flip(x - 1, y);
     if (y + 1 < rows) flip(x, y + 1);
     if ( y - 1 >= 0) flip(x, y - 1);
   }
-  else if (mode === "square"){
+  else if (mode === "square"){ //3x3 pattern
     for (let dy = -1; dy <= 1; dy++){
       for (let dx = -1; dx <= 1; dx++){
         let nx = x + dx, ny = y + dy;
@@ -99,6 +97,13 @@ function renderGrid(){
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
       let fillColor = grid[y][x];
+      if (fillColor === 255){ //outline on white tiles
+        stroke(0);
+        strokeWeight(1);
+      }
+      else {
+        noStroke(); //no outline for black tiles
+      }
       fill(fillColor);
       square(x*squareSize,y*squareSize,squareSize);
     }
@@ -113,46 +118,64 @@ function randomizeGrid(){ //loop trough each tile and give random color
   }
 }
 
-function checkWin(){
+function checkWin(){ //check if all tiles match
   let first = grid[0][0];
-  for (let r = 0; r < rows; r++){
+  for (let r = 0; r < rows; r++){ //loop board
     for (let c = 0; c < cols; c++){
-      if (grid[r][c] !== first){
+      if (grid[r][c] !== first){ //mismatch not win
         return false;
       }
     }
   }
-  return true;
+  return true; //all match = win
 }
 
-function drawOverlay(){
-  let x = getCurrrentX();
+function drawOverlay(){ //draw overlay on tiles that will flip
+
+  let x = getCurrentX();
   let y = getCurrentY();
 
-  if (x < 0 || x >= cols || y < 0 || y >= rows){
+  if (x < 0 || x >= cols || y < 0 || y >= rows){ //stop if mouse outside grid
     return;
   }
 
-  fill(0, 255, 0, 100);
+  fill(0, 255, 255, 100); //color of overlay
   noStroke();
 
-  if (keyIsDown(SHIFT)){
+  if (keyIsDown(SHIFT)){ //only one tile
     square( x * squareSize, y * squareSize, squareSize);
     return;
   }
 
-  if (mde === "cross"){
+  if (mode === "cross"){ //cross pattern
     highlightTile(x, y);
     highlightTile(x + 1, y);
     highlightTile(x - 1, y);
     highlightTile(x, y + 1);
     highlightTile(x, y - 1);
   }
-  else if (mode === "square"){
+  else if (mode === "square"){ //3x3 pattern
     for (let dy = -1; dy <= 1; dy ++){
       for (let dx = -1; dx <= 1; dx++){
         highlightTile(x + dx, y + dy);
       }
+    }
+  }
+}
+
+function highlightTile(cx, cy){ //draw overlay tile if inside grid
+  if (cx >= 0 && cx < cols && cy >= 0 && cy < rows){
+    rect(cx * squareSize, cy * squareSize, squareSize, squareSize);
+  }
+}
+
+function keyPressed(){ //press space to switch mode
+  if (key === ' '){
+    if (mode === "cross"){ //toggle cross square
+      mode = "square";
+    }
+    else {
+      mode = "cross";
     }
   }
 }

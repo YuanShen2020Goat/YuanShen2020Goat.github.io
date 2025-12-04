@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy5hebk5iq3ql"]
+
+[ext_resource type="Texture2D" uid="uid://1ef2ric4x1mv" path="res://Foxy.png" id="1_2orxn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_monf5"]
+atlas = ExtResource("1_2orxn")
+region = Rect2(0, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aypkh"]
+atlas = ExtResource("1_2orxn")
+region = Rect2(33, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhoun"]
+atlas = ExtResource("1_2orxn")
+region = Rect2(66, 0, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdyh8"]
+atlas = ExtResource("1_2orxn")
+region = Rect2(99, 0, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8e4qx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_monf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aypkh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhoun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdyh8")
+}],
+"loop": true,
+"name": &"dai ji",
+"speed": 10.0
+}]
+
+[node name="player" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8e4qx")
+animation = &"dai ji"
+autoplay = "dai ji"
+frame_progress = 0.3642538

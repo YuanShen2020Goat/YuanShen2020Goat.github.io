@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://bf28edn1208av"]
+
+[ext_resource type="Script" uid="uid://c0s7mhrelhv74" path="res://scripts/player.gd" id="1_w5aja"]
+[ext_resource type="Script" uid="uid://bmyj4bxv8lsfu" path="res://scripts/camera_control.gd" id="2_onqr8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxttp"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_w5aja"]
+sky_material = SubResource("ProceduralSkyMaterial_lxttp")
+
+[sub_resource type="Environment" id="Environment_onqr8"]
+background_mode = 2
+sky = SubResource("Sky_w5aja")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_lxttp"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_onqr8"]
+data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_w5aja"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_onqr8"]
+
+[node name="game scene" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_onqr8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_lxttp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_onqr8")
+
+[node name="player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1_w5aja")
+speed = 6.0
+jump_velocity = 5.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+mesh = SubResource("CapsuleMesh_w5aja")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+shape = SubResource("CapsuleShape3D_onqr8")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="player"]
+spring_length = 5.0
+script = ExtResource("2_onqr8")
+
+[node name="Camera3D" type="Camera3D" parent="player/SpringArm3D"]

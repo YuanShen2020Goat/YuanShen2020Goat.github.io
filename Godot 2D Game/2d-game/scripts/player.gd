@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var move_speed: float = 100
 @export var animator : AnimatedSprite2D
-var is_game_over : 
+var is_game_over : bool = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -14,4 +14,5 @@ func _process(delta: float) -> void:
 	move_and_slide()
 
 func game_over():
+	is_game_over = true
 	get_tree().reload_current_scene()

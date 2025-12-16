@@ -4,7 +4,7 @@ extends SpringArm3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	input.mouse_mode = 
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -12,7 +12,8 @@ func _process(delta: float) -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion: #camera follows mouse
 		var mouse_delta = event.relative
 		rotation.y -= mouse_delta.x * mouse_sensitivity
 		rotation.x -= mouse_delta.y * mouse_sensitivity
+		rotation.x = clamp(rotation.x, -PI/2, PI/4) #strict camera angle prevent over turning

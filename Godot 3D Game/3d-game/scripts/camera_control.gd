@@ -1,6 +1,6 @@
 extends SpringArm3D
 
-@export var mouse_sensitivity: float = 0.01
+@export var mouse_sensitivity: float = 0.003
 @export var jump_velocity = 4.5
 
 @export var camera: Camera3D

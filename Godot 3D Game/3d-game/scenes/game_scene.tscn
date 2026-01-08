@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bf28edn1208av"]
+[gd_scene load_steps=14 format=3 uid="uid://bf28edn1208av"]
 
 [ext_resource type="PackedScene" uid="uid://bs7jest34ds8c" path="res://scenes/player.tscn" id="1_w5aja"]
 [ext_resource type="PackedScene" uid="uid://mfjprjcj7xq7" path="res://3d assets/model/Cube_Prototype_Large_A.gltf" id="2_onqr8"]
 [ext_resource type="PackedScene" uid="uid://duqg1j2hvnx1q" path="res://3d assets/model/Floor.gltf" id="3_ycayy"]
+[ext_resource type="Script" uid="uid://b8ldjklr6u3db" path="res://scripts/jump_pad.gd" id="4_y3j0m"]
+[ext_resource type="PackedScene" uid="uid://dvepsmqfdsj18" path="res://3d assets/model/Primitive_Floor.gltf" id="5_rurhu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxttp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -19,6 +21,21 @@ glow_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bw6k5"]
 size = Vector3(3.9492188, 0.4963379, 3.968811)
+
+[sub_resource type="Animation" id="Animation_ycayy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(11.985955, -0.38506508, -30.480024)]
+}
 
 [sub_resource type="Animation" id="Animation_y3j0m"]
 resource_name = "moving"
@@ -37,26 +54,14 @@ tracks/0/keys = {
 "values": [Vector3(11.985955, -0.38506508, -30.480024), Vector3(11.985955, -0.38506508, -47.436302)]
 }
 
-[sub_resource type="Animation" id="Animation_ycayy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(11.985955, -0.38506508, -30.480024)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rurhu"]
 _data = {
 &"RESET": SubResource("Animation_ycayy"),
 &"moving": SubResource("Animation_y3j0m")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kk2rg"]
+size = Vector3(2.9836502, 0.13916016, 2.965393)
 
 [node name="game scene" type="Node3D"]
 
@@ -68,7 +73,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="player" parent="." instance=ExtResource("1_w5aja")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8224525, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1301055, 6.256448, -0.26555395)
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -107,6 +112,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.011562, 0, -53.987347)
 [node name="Cube_Prototype_Large_A13" parent="Ground" instance=ExtResource("2_onqr8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.011562, 0, -57.979137)
 
+[node name="Cube_Prototype_Large_A14" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7160797, 0, -58.91615)
+
+[node name="Cube_Prototype_Large_A15" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.265396, 0, -52.99804)
+
+[node name="Cube_Prototype_Large_A16" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.702423, 0, -58.793503)
+
+[node name="Cube_Prototype_Large_A17" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.829914, 4.0084767, -58.793503)
+
+[node name="Cube_Prototype_Large_A18" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.794584, 4.0084777, -58.793503)
+
+[node name="Cube_Prototype_Large_A19" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.74952, 4, -58.793503)
+
+[node name="Cube_Prototype_Large_A20" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.947744, 4.0084767, -58.793503)
+
+[node name="Cube_Prototype_Large_A21" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.814034, 3.99893, -54.771267)
+
+[node name="Cube_Prototype_Large_A22" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.778706, 3.998931, -54.771267)
+
+[node name="Cube_Prototype_Large_A23" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.733639, 3.9904528, -54.771267)
+
+[node name="Cube_Prototype_Large_A25" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.753292, 3.997592, -62.788555)
+
+[node name="Cube_Prototype_Large_A26" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.71796, 3.997592, -62.788555)
+
+[node name="Cube_Prototype_Large_A27" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.672897, 3.9891148, -62.788555)
+
+[node name="Cube_Prototype_Large_A28" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.67994, 3.997592, -58.804527)
+
 [node name="MovingPlatform" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.985955, -0.38506508, -30.480024)
 metadata/_edit_group_ = true
@@ -123,3 +170,17 @@ libraries = {
 &"": SubResource("AnimationLibrary_rurhu")
 }
 autoplay = "moving"
+
+[node name="JumpPad" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.683522, 0, -58.771458)
+script = ExtResource("4_y3j0m")
+metadata/_edit_group_ = true
+
+[node name="Primitive_Floor2" parent="JumpPad" instance=ExtResource("5_rurhu")]
+transform = Transform3D(0.745, 0, 0, 0, 0.125, 0, 0, 0, 0.745, 0, 3.956513, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JumpPad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00049209595, 4.01305, -0.0011291504)
+shape = SubResource("BoxShape3D_kk2rg")
+
+[connection signal="body_entered" from="JumpPad" to="JumpPad" method="_on_body_entered"]

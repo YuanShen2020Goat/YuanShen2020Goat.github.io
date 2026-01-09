@@ -1,10 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bf28edn1208av"]
+[gd_scene load_steps=18 format=3 uid="uid://bf28edn1208av"]
 
 [ext_resource type="PackedScene" uid="uid://bs7jest34ds8c" path="res://scenes/player.tscn" id="1_w5aja"]
 [ext_resource type="PackedScene" uid="uid://mfjprjcj7xq7" path="res://3d assets/model/Cube_Prototype_Large_A.gltf" id="2_onqr8"]
 [ext_resource type="PackedScene" uid="uid://duqg1j2hvnx1q" path="res://3d assets/model/Floor.gltf" id="3_ycayy"]
 [ext_resource type="Script" uid="uid://b8ldjklr6u3db" path="res://scripts/jump_pad.gd" id="4_y3j0m"]
 [ext_resource type="PackedScene" uid="uid://dvepsmqfdsj18" path="res://3d assets/model/Primitive_Floor.gltf" id="5_rurhu"]
+[ext_resource type="Script" uid="uid://b14vpuue72rcm" path="res://scripts/game_manager.gd" id="6_rurhu"]
+[ext_resource type="Script" uid="uid://w02jcfi6n4c2" path="res://scripts/collectibles.gd" id="7_b5spy"]
+[ext_resource type="PackedScene" uid="uid://dutln0diobh51" path="res://3d assets/model/collectible_diamond.glb" id="8_utbpp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxttp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -62,6 +65,8 @@ _data = {
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kk2rg"]
 size = Vector3(2.9836502, 0.13916016, 2.965393)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kk2rg"]
 
 [node name="game scene" type="Node3D"]
 
@@ -183,4 +188,28 @@ transform = Transform3D(0.745, 0, 0, 0, 0.125, 0, 0, 0, 0.745, 0, 3.956513, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00049209595, 4.01305, -0.0011291504)
 shape = SubResource("BoxShape3D_kk2rg")
 
+[node name="killzone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.1480627, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="killzone"]
+shape = SubResource("WorldBoundaryShape3D_kk2rg")
+
+[node name="game manager" type="Node3D" parent="."]
+script = ExtResource("6_rurhu")
+
+[node name="collectibles" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5396647, -12.325879)
+script = ExtResource("7_b5spy")
+
+[node name="collectible_diamond" parent="collectibles" instance=ExtResource("8_utbpp")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="collectibles"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.5255494, -1.3013669e-09)
+light_color = Color(0.9019608, 0.8039216, 0.20392157, 1)
+light_energy = 8.0
+spot_range = 3.74694
+spot_angle = 33.724102
+spot_angle_attenuation = 0.018581374
+
 [connection signal="body_entered" from="JumpPad" to="JumpPad" method="_on_body_entered"]
+[connection signal="body_entered" from="killzone" to="game manager" method="respawn_player"]

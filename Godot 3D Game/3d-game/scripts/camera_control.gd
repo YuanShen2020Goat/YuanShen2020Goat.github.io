@@ -22,7 +22,7 @@ func _input(event: InputEvent) -> void:
 		rotation.x = clamp(rotation.x, -PI/2, PI/4) #strict camera angle prevent over turning
 
 	if event is InputEventKey:
-		if event.keycode == KEY_TAB and event.pressed:
+		if event.keycode == KEY_TAB and event.pressed: #toggle mouse lock using tab
 			if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			else:

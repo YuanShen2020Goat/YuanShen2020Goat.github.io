@@ -1,6 +1,5 @@
-extends Area3D
+extends Node3D
 
-@export var jump_velocity: float = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,6 +11,6 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_body_entered(body: Node3D) -> void: #detect if player body object is on the collision shape then make the object jump
+func respawn_player(body: Node3D) -> void: #detect if player touches the world boundary collsion shape to reload the game
 	if body is CharacterBody3D:
-		body.velocity.y = jump_velocity
+		get_tree().reload_current_scene()

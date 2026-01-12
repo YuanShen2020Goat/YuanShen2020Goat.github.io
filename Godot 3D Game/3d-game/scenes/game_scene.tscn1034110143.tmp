@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bf28edn1208av"]
+[gd_scene load_steps=20 format=3 uid="uid://bf28edn1208av"]
 
 [ext_resource type="PackedScene" uid="uid://bs7jest34ds8c" path="res://scenes/player.tscn" id="1_w5aja"]
 [ext_resource type="PackedScene" uid="uid://mfjprjcj7xq7" path="res://3d assets/model/Cube_Prototype_Large_A.gltf" id="2_onqr8"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://dvepsmqfdsj18" path="res://3d assets/model/Primitive_Floor.gltf" id="5_rurhu"]
 [ext_resource type="Script" uid="uid://b14vpuue72rcm" path="res://scripts/game_manager.gd" id="6_rurhu"]
 [ext_resource type="PackedScene" uid="uid://78p508o45oh2" path="res://scenes/collectibles.tscn" id="7_kk2rg"]
+[ext_resource type="PackedScene" uid="uid://dutln0diobh51" path="res://3d assets/model/collectible_diamond.glb" id="8_mw25s"]
+[ext_resource type="PackedScene" uid="uid://bhvhvyluqymh1" path="res://3d assets/model/collectible_coin.gltf" id="9_tcjrq"]
+[ext_resource type="PackedScene" uid="uid://dbie2efirl2r4" path="res://3d assets/model/collectible_cherry.glb" id="10_rvs2r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxttp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -200,27 +203,27 @@ script = ExtResource("6_rurhu")
 
 [node name="collectible" parent="collectibles" instance=ExtResource("7_kk2rg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5396647, -12.325879)
+diamond_model = ExtResource("8_mw25s")
+coin_model = ExtResource("9_tcjrq")
+cherry_model = ExtResource("10_rvs2r")
 
 [node name="collectible2" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.784548, 4.5396647, -58.845345)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.012066, 4.5396647, -12.325879)
 
 [node name="collectible3" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.912744, 4.5396647, -22.610226)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.161021, 8.894455, -58.76848)
 
 [node name="collectible4" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.979018, 4.5396647, -38.758087)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.939901, 4.5396647, -37.138474)
 
 [node name="collectible5" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.939368, 4.5396647, -54.62518)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.999523, 8.87566, -58.82213)
 
 [node name="collectible6" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.79878, 8.37698, -58.735497)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.989309, 4.936396, -56.003727)
 
 [node name="collectible7" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.595272, 8.844055, -58.61259)
-
-[node name="collectible8" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.962698, 4.5396647, -12.247464)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.054653, 4.8931794, -53.113438)
 
 [connection signal="body_entered" from="JumpPad" to="JumpPad" method="_on_body_entered"]
 [connection signal="body_entered" from="killzone" to="game manager" method="respawn_player"]

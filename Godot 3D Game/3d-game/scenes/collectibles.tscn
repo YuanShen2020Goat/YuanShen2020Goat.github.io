@@ -1,12 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://78p508o45oh2"]
+[gd_scene load_steps=6 format=3 uid="uid://78p508o45oh2"]
 
 [ext_resource type="Script" uid="uid://w02jcfi6n4c2" path="res://scripts/collectibles.gd" id="1_rms2y"]
 [ext_resource type="PackedScene" uid="uid://dutln0diobh51" path="res://3d assets/model/collectible_diamond.glb" id="2_baflr"]
+[ext_resource type="PackedScene" uid="uid://bhvhvyluqymh1" path="res://3d assets/model/collectible_coin.gltf" id="3_nfnll"]
+[ext_resource type="PackedScene" uid="uid://dbie2efirl2r4" path="res://3d assets/model/collectible_cherry.glb" id="4_paja6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nfnll"]
+radius = 0.44486058
 
 [node name="collectibles" type="Area3D"]
 script = ExtResource("1_rms2y")
+type = 1
+diamond_model = ExtResource("2_baflr")
+coin_model = ExtResource("3_nfnll")
+cherry_model = ExtResource("4_paja6")
 
-[node name="collectible_diamond" parent="." instance=ExtResource("2_baflr")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17522931, 0)
+shape = SubResource("SphereShape3D_nfnll")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.5255494, -1.3013669e-09)
@@ -15,3 +26,5 @@ light_energy = 8.0
 spot_range = 3.74694
 spot_angle = 33.724102
 spot_angle_attenuation = 0.018581374
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

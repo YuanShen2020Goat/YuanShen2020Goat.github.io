@@ -3,6 +3,7 @@ extends Area3D
 enum CollectibleType {DIAMOND, COIN, CHERRY}
 @export var type: CollectibleType
 
+#place to put in collectible's assets
 @export var diamond_model: PackedScene
 @export var coin_model: PackedScene
 @export var cherry_model: PackedScene
@@ -16,8 +17,8 @@ var original_y : float
 func _ready() -> void:
 	original_y = position.y
 	
-	type = randi_range(0, 2)
-	var model: PackedScene
+	type = randi_range(0, 2) #randomize collectible generation, diamond = 0 coin = 1 cherry = 2
+	var model: PackedScene #load model dragged in checker that replaced PackedScene
 	match type:
 		CollectibleType.DIAMOND:
 			model = diamond_model
@@ -38,5 +39,6 @@ func _process(delta: float) -> void: #let collectibles rotate itself
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body is CharacterBody3D:
+	if body is CharacterBody3D: #detect if player touches
 		queue_free() # Replace with function body.
+		GameManager.instance.collect_item(CollectibleType.find_key(type)) #when triggered jump to game manager

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bf28edn1208av"]
+[gd_scene load_steps=21 format=3 uid="uid://bf28edn1208av"]
 
 [ext_resource type="PackedScene" uid="uid://bs7jest34ds8c" path="res://scenes/player.tscn" id="1_w5aja"]
 [ext_resource type="PackedScene" uid="uid://mfjprjcj7xq7" path="res://3d assets/model/Cube_Prototype_Large_A.gltf" id="2_onqr8"]
@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://dvepsmqfdsj18" path="res://3d assets/model/Primitive_Floor.gltf" id="5_rurhu"]
 [ext_resource type="Script" uid="uid://b14vpuue72rcm" path="res://scripts/game_manager.gd" id="6_rurhu"]
 [ext_resource type="PackedScene" uid="uid://78p508o45oh2" path="res://scenes/collectibles.tscn" id="7_kk2rg"]
+[ext_resource type="Texture2D" uid="uid://brykp5iybdhll" path="res://3d assets/texture/diamond_icon.png" id="8_utbpp"]
+[ext_resource type="Theme" uid="uid://dk42s7ocljreu" path="res://main_ui.tres" id="9_mw25s"]
+[ext_resource type="Texture2D" uid="uid://2eijbijunydk" path="res://3d assets/texture/coin_icon.png" id="10_tcjrq"]
+[ext_resource type="Texture2D" uid="uid://dr4mpb3meu184" path="res://3d assets/texture/cherry_icon.png" id="11_rvs2r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxttp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -221,6 +225,66 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.595272, 8.844055, -58.612
 
 [node name="collectible8" parent="collectibles" instance=ExtResource("7_kk2rg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.962698, 4.5396647, -12.247464)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+offset_left = 1778.0
+offset_top = 6.0
+offset_right = 1914.0
+offset_bottom = 261.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="TextureRect" type="TextureRect" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_utbpp")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("9_mw25s")
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="TextureRect2" type="TextureRect" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("10_tcjrq")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("9_mw25s")
+theme_type_variation = &"CoinLabel"
+text = "0"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="TextureRect3" type="TextureRect" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("11_rvs2r")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label3" type="Label" parent="UI/PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme = ExtResource("9_mw25s")
+theme_type_variation = &"CherryLabel"
+text = "0"
 
 [connection signal="body_entered" from="JumpPad" to="JumpPad" method="_on_body_entered"]
 [connection signal="body_entered" from="killzone" to="game manager" method="respawn_player"]

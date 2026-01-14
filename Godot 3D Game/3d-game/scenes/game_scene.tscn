@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://bf28edn1208av"]
+[gd_scene load_steps=30 format=3 uid="uid://bf28edn1208av"]
 
 [ext_resource type="PackedScene" uid="uid://bs7jest34ds8c" path="res://scenes/player.tscn" id="1_w5aja"]
 [ext_resource type="PackedScene" uid="uid://mfjprjcj7xq7" path="res://3d assets/model/Cube_Prototype_Large_A.gltf" id="2_onqr8"]
+[ext_resource type="PackedScene" uid="uid://c7jy6hjhvxw4a" path="res://3d assets/model/Primitive_Beam.gltf" id="3_tqxxy"]
 [ext_resource type="PackedScene" uid="uid://duqg1j2hvnx1q" path="res://3d assets/model/Floor.gltf" id="3_ycayy"]
 [ext_resource type="Script" uid="uid://b8ldjklr6u3db" path="res://scripts/jump_pad.gd" id="4_y3j0m"]
 [ext_resource type="PackedScene" uid="uid://dvepsmqfdsj18" path="res://3d assets/model/Primitive_Floor.gltf" id="5_rurhu"]
@@ -11,6 +12,8 @@
 [ext_resource type="Theme" uid="uid://dk42s7ocljreu" path="res://main_ui.tres" id="9_mw25s"]
 [ext_resource type="Texture2D" uid="uid://2eijbijunydk" path="res://3d assets/texture/coin_icon.png" id="10_tcjrq"]
 [ext_resource type="Texture2D" uid="uid://dr4mpb3meu184" path="res://3d assets/texture/cherry_icon.png" id="11_rvs2r"]
+[ext_resource type="PackedScene" uid="uid://30ngehwdplm5" path="res://3d assets/model/obstacle.glb" id="12_rvs2r"]
+[ext_resource type="PackedScene" uid="uid://b4fgt3dk72p8l" path="res://scenes/checkpoint.tscn" id="14_5ay1a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxttp"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -23,6 +26,7 @@ sky_material = SubResource("ProceduralSkyMaterial_lxttp")
 background_mode = 2
 sky = SubResource("Sky_w5aja")
 tonemap_mode = 2
+sdfgi_energy = 0.2
 glow_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bw6k5"]
@@ -70,6 +74,59 @@ _data = {
 size = Vector3(2.9836502, 0.13916016, 2.965393)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_kk2rg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rvs2r"]
+albedo_color = Color(0.9609055, 0.3886654, 0.058432624, 1)
+roughness = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqxxy"]
+albedo_color = Color(9.62615e-07, 0.6978085, 0.91408896, 1)
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ay1a"]
+albedo_color = Color(1, 0.07422403, 0.15223682, 1)
+albedo_texture = ExtResource("8_utbpp")
+metallic = 1.0
+roughness = 0.0
+
+[sub_resource type="Animation" id="Animation_rvs2r"]
+resource_name = "rotate"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Obstacle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0), Vector3(0, 7.8539815, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tqxxy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Obstacle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5ay1a"]
+_data = {
+&"RESET": SubResource("Animation_tqxxy"),
+&"rotate": SubResource("Animation_rvs2r")
+}
 
 [node name="game scene" type="Node3D"]
 
@@ -120,6 +177,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.011562, 0, -53.987347)
 [node name="Cube_Prototype_Large_A13" parent="Ground" instance=ExtResource("2_onqr8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.011562, 0, -57.979137)
 
+[node name="Cube_Prototype_Large_A24" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.79259, 4.00757, -56.842857)
+
+[node name="Cube_Prototype_Large_A29" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.79259, 4.00757, -60.83465)
+
+[node name="Cube_Prototype_Large_A30" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.8008, 4.00757, -56.842857)
+
+[node name="Cube_Prototype_Large_A31" parent="Ground" instance=ExtResource("2_onqr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.8008, 4.00757, -60.83465)
+
 [node name="Cube_Prototype_Large_A14" parent="Ground" instance=ExtResource("2_onqr8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7160797, 0, -58.91615)
 
@@ -162,6 +231,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.672897, 3.9891148, -62.78
 [node name="Cube_Prototype_Large_A28" parent="Ground" instance=ExtResource("2_onqr8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.67994, 3.997592, -58.804527)
 
+[node name="Primitive_Beam2" parent="Ground" instance=ExtResource("3_tqxxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.04461, 6.972059, -58.817413)
+
+[node name="Primitive_Beam" parent="Ground" instance=ExtResource("3_tqxxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.060593, 6.9752555, -58.818836)
+
+[node name="Primitive_Beam3" parent="Ground" instance=ExtResource("3_tqxxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59.68582, 6.972059, -58.817413)
+
+[node name="Primitive_Beam4" parent="Ground" instance=ExtResource("3_tqxxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.701805, 6.9752555, -58.818836)
+
 [node name="MovingPlatform" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.985955, -0.38506508, -30.480024)
 metadata/_edit_group_ = true
@@ -197,8 +278,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.1480627, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="killzone"]
 shape = SubResource("WorldBoundaryShape3D_kk2rg")
 
-[node name="game manager" type="Node3D" parent="."]
+[node name="game manager" type="Node3D" parent="." node_paths=PackedStringArray("item_labels")]
 script = ExtResource("6_rurhu")
+item_labels = {
+"CHERRY": NodePath("../UI/PanelContainer/VBoxContainer/HBoxContainer3/Label3"),
+"COIN": NodePath("../UI/PanelContainer/VBoxContainer/HBoxContainer2/Label2"),
+"DIAMOND": NodePath("../UI/PanelContainer/VBoxContainer/HBoxContainer/Label")
+}
 
 [node name="collectibles" type="Node3D" parent="."]
 
@@ -215,7 +301,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.912744, 4.5396647, -22.610
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.979018, 4.5396647, -38.758087)
 
 [node name="collectible5" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.939368, 4.5396647, -54.62518)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.939368, 4.5396647, -56.000782)
 
 [node name="collectible6" parent="collectibles" instance=ExtResource("7_kk2rg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.79878, 8.37698, -58.735497)
@@ -229,10 +315,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.962698, 4.5396647, -12.247
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="PanelContainer" type="PanelContainer" parent="UI"]
-offset_left = 1778.0
-offset_top = 6.0
-offset_right = 1914.0
-offset_bottom = 261.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -152.0
+offset_top = 13.0
+offset_right = -16.0
+offset_bottom = 268.0
+grow_horizontal = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer"]
 layout_mode = 2
@@ -286,5 +376,35 @@ theme = ExtResource("9_mw25s")
 theme_type_variation = &"CherryLabel"
 text = "0"
 
+[node name="obstacle" parent="." instance=ExtResource("12_rvs2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.752077, 7.9835424, -58.775333)
+
+[node name="Obstacle" parent="obstacle" index="0"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_rvs2r")
+surface_material_override/1 = SubResource("StandardMaterial3D_tqxxy")
+surface_material_override/2 = SubResource("StandardMaterial3D_5ay1a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="obstacle"]
+callback_mode_process = 0
+libraries = {
+&"": SubResource("AnimationLibrary_5ay1a")
+}
+autoplay = "rotate"
+
+[node name="Checkpoint" parent="." instance=ExtResource("14_5ay1a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1836033, 3.9768472, 1.2086811)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("14_5ay1a")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 15.304043, 3.9768472, -59.135204)
+
+[node name="Checkpoint3" parent="." instance=ExtResource("14_5ay1a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.06115, 7.9843435, -57.47833)
+
+[node name="Checkpoint4" parent="." instance=ExtResource("14_5ay1a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.19487, 7.980562, -55.44801)
+
 [connection signal="body_entered" from="JumpPad" to="JumpPad" method="_on_body_entered"]
 [connection signal="body_entered" from="killzone" to="game manager" method="respawn_player"]
+
+[editable path="obstacle"]

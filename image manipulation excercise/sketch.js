@@ -8,16 +8,20 @@
 
 let myImage;
 
-async function setup() {
+function setup() {
+  createCanvas(601, 602);
   pixelDensity(1);
+  loadAssets();
 
+}
+
+async function loadAssets() {
   // choose the image
   myImage = await loadImage("assets/chip.jpg");
   // myImage = await loadImage("assets/race.jpg");
   // myImage = await loadImage("assets/nuit.jpg");
   // myImage = await loadImage("assets/hand.jpg");
-
-  createCanvas(myImage.width, myImage.height);
+  
 }
 
 function draw() {

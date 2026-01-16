@@ -17,10 +17,10 @@ function setup() {
 
 async function loadAssets() {
   // choose the image
-  myImage = await loadImage("assets/chip.jpg");
+  // myImage = await loadImage("assets/chip.jpg");
   // myImage = await loadImage("assets/race.jpg");
   // myImage = await loadImage("assets/nuit.jpg");
-  // myImage = await loadImage("assets/hand.jpg");
+  myImage = await loadImage("assets/hand.jpg");
   
 }
 
@@ -31,8 +31,10 @@ function draw() {
   loadPixels();
 
   // choose the effect
-  majorityColor();    
+  // majorityColor();    
   // removeGreenRight();  
+  // posterizeColor();
+  mirrorOnleft();
 
 
   updatePixels();
@@ -75,6 +77,68 @@ function removeGreenRight() {
         let index = (y * width + x) * 4;
         pixels[index + 1] = 0; // set G to 0
       }
+    }
+  }
+}
+
+
+function getAvg(x, y) {
+  let i = (width * y + x) * 4;
+  let r = pixels[i];
+  let g = pixels[i + 1];
+  let b = pixels[i + 2];
+  return (r + g + b) / 3;
+}
+
+function setPixelOneD(pos, r, g, b) {
+  pixels[pos] = r;
+  pixels[pos + 1] = g;
+  pixels[pos + 2] = b;
+}
+
+function setPixel(x, y, r, g, b) {
+  let index = (width * y + x) * 4;
+  setPixelOneD(index, r, g, b);
+}
+
+// 3: five color posterize
+// use averge intensity to map
+function posterizeColor(){
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      let avg = getAvg(x, y);
+      let r, g, b;
+      if (avg >= 205) {
+        r = 170; g = 230; b = 220;
+      } else if (avg >= 155) {
+        r = 255; g = 150; b = 210;
+      } else if (avg >= 105) {
+        r = 120; g = 180; b = 60;
+      } else if (avg >= 55) {
+        r = 130; g = 30; b = 130;
+      } else {
+        r = 90; g = 10; b = 50;
+      }
+
+      setPixel(x, y, r, g, b);
+    }
+  }
+}
+
+// 4: horizontal mirrow
+// copy pixels from right to mirrored on left
+function mirrorOnleft() {
+  for (let x = floor(width / 2); x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      let srcIndex = (y * width + x) * 4;
+      let r = pixels[srcIndex];
+      let g = pixels[srcIndex + 1];
+      let b = pixels[srcIndex + 2];
+      let mirrorX  = width - x - 1;
+      let dstIndex = (y * width + mirrorX) * 4;
+      pixels[dstIndex] = r;
+      pixels[dstIndex + 1] = g;
+      pixels[dstIndex + 2] = b;
     }
   }
 }

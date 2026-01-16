@@ -1,5 +1,6 @@
-[gd_scene load_steps=30 format=3 uid="uid://bf28edn1208av"]
+[gd_scene load_steps=28 format=3 uid="uid://bf28edn1208av"]
 
+[ext_resource type="Environment" uid="uid://dx71lgwxy8c0d" path="res://environment.tres" id="1_ldkr4"]
 [ext_resource type="PackedScene" uid="uid://bs7jest34ds8c" path="res://scenes/player.tscn" id="1_w5aja"]
 [ext_resource type="PackedScene" uid="uid://mfjprjcj7xq7" path="res://3d assets/model/Cube_Prototype_Large_A.gltf" id="2_onqr8"]
 [ext_resource type="PackedScene" uid="uid://c7jy6hjhvxw4a" path="res://3d assets/model/Primitive_Beam.gltf" id="3_tqxxy"]
@@ -14,20 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://dr4mpb3meu184" path="res://3d assets/texture/cherry_icon.png" id="11_rvs2r"]
 [ext_resource type="PackedScene" uid="uid://30ngehwdplm5" path="res://3d assets/model/obstacle.glb" id="12_rvs2r"]
 [ext_resource type="PackedScene" uid="uid://b4fgt3dk72p8l" path="res://scenes/checkpoint.tscn" id="14_5ay1a"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lxttp"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-
-[sub_resource type="Sky" id="Sky_w5aja"]
-sky_material = SubResource("ProceduralSkyMaterial_lxttp")
-
-[sub_resource type="Environment" id="Environment_onqr8"]
-background_mode = 2
-sky = SubResource("Sky_w5aja")
-tonemap_mode = 2
-sdfgi_energy = 0.2
-glow_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bw6k5"]
 size = Vector3(3.9492188, 0.4963379, 3.968811)
@@ -90,6 +77,21 @@ albedo_texture = ExtResource("8_utbpp")
 metallic = 1.0
 roughness = 0.0
 
+[sub_resource type="Animation" id="Animation_tqxxy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Obstacle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_rvs2r"]
 resource_name = "rotate"
 length = 4.0
@@ -107,21 +109,6 @@ tracks/0/keys = {
 "values": [Vector3(0, 1.5707964, 0), Vector3(0, 7.8539815, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_tqxxy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Obstacle:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 1.5707964, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5ay1a"]
 _data = {
 &"RESET": SubResource("Animation_tqxxy"),
@@ -131,14 +118,14 @@ _data = {
 [node name="game scene" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_onqr8")
+environment = ExtResource("1_ldkr4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
 [node name="player" parent="." instance=ExtResource("1_w5aja")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1301055, 6.256448, -0.26555395)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1301055, 5.0746346, -0.26555395)
 
 [node name="Ground" type="Node3D" parent="."]
 
@@ -278,13 +265,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.1480627, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="killzone"]
 shape = SubResource("WorldBoundaryShape3D_kk2rg")
 
-[node name="game manager" type="Node3D" parent="." node_paths=PackedStringArray("item_labels")]
+[node name="game manager" type="Node3D" parent="." node_paths=PackedStringArray("item_labels", "win_label")]
 script = ExtResource("6_rurhu")
 item_labels = {
 "CHERRY": NodePath("../UI/PanelContainer/VBoxContainer/HBoxContainer3/Label3"),
 "COIN": NodePath("../UI/PanelContainer/VBoxContainer/HBoxContainer2/Label2"),
 "DIAMOND": NodePath("../UI/PanelContainer/VBoxContainer/HBoxContainer/Label")
 }
+win_label = NodePath("../UI/WinLabel")
 
 [node name="collectibles" type="Node3D" parent="."]
 
@@ -307,10 +295,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.939368, 4.5396647, -56.000
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.79878, 8.37698, -58.735497)
 
 [node name="collectible7" parent="collectibles" instance=ExtResource("7_kk2rg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.595272, 8.844055, -58.61259)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.713673, 8.844055, -54.936985)
 
 [node name="collectible8" parent="collectibles" instance=ExtResource("7_kk2rg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.962698, 4.5396647, -12.247464)
+
+[node name="collectible9" parent="collectibles" instance=ExtResource("7_kk2rg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.887016, 9.811877, -58.791805)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -376,6 +367,37 @@ theme = ExtResource("9_mw25s")
 theme_type_variation = &"CherryLabel"
 text = "0"
 
+[node name="WinLabel" type="Label" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -661.0
+offset_top = -60.5
+offset_right = 661.0
+offset_bottom = 60.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 120
+text = "Congratulations for passing!"
+
+[node name="Button" type="Button" parent="UI/WinLabel"]
+layout_mode = 0
+offset_left = 348.0
+offset_top = 163.5
+offset_right = 540.0
+offset_bottom = 236.5
+text = "Restart"
+
+[node name="Button2" type="Button" parent="UI/WinLabel"]
+layout_mode = 0
+offset_left = 765.0
+offset_top = 164.5
+offset_right = 1044.0
+offset_bottom = 237.5
+text = "Main Menu"
+
 [node name="obstacle" parent="." instance=ExtResource("12_rvs2r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.752077, 7.9835424, -58.775333)
 
@@ -402,9 +424,12 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 15.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.06115, 7.9843435, -57.47833)
 
 [node name="Checkpoint4" parent="." instance=ExtResource("14_5ay1a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.19487, 7.980562, -55.44801)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.11968, 7.980562, -57.496193)
+is_final_checkpoint = true
 
 [connection signal="body_entered" from="JumpPad" to="JumpPad" method="_on_body_entered"]
 [connection signal="body_entered" from="killzone" to="game manager" method="respawn_player"]
+[connection signal="pressed" from="UI/WinLabel/Button" to="game manager" method="reload_scene"]
+[connection signal="pressed" from="UI/WinLabel/Button2" to="game manager" method="to_main_menu"]
 
 [editable path="obstacle"]
